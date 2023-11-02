@@ -1,0 +1,76 @@
+<form [formGroup]="todoForm" class="todoInfo" (ngSubmit)="onTodoForm()">
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+        </mat-form-field>
+        <ng-container *ngIf="f['title'].touched && f['title'].invalid">
+            <p class="text-danger" *ngIf="f['title'].hasError('required')">
+                Title is required !!!
+            </p>
+        </ng-container>
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Assigned Date</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="assignedDate"/>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+            <ng-container *ngIf="f['assignedDate'].touched && f['assignedDate'].invalid">
+                <p class="text-danger" *ngIf="f['assignedDate'].hasError('required')">
+                    Date is required !!!
+                </p>
+            </ng-container>
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Deu Date</mat-label>
+            <input matInput [matDatepicker]="picker1" [min]="minDate" [max]="date"  formControlName="dueDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <ng-container *ngIf="f['dueDate'].touched && f['dueDate'].invalid">
+            <p class="text-danger" *ngIf="f['dueDate'].hasError('required')">
+                Date is required !!!
+            </p>
+        </ng-container>
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let s of status" [value]="s">
+                {{s}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-container *ngIf="f['status'].touched && f['status'].invalid">
+            <p class="text-danger" *ngIf="f['status'].hasError('required')">
+                status is required !!!
+            </p>
+        </ng-container>
+    </div>
+    <div class="form-group">
+        <input type="file" (change)="onFileSelected($event)" accept=".jpg,.jpeg,.png"
+            formControlName="selectFile" required
+            />
+            <div class="text-center">
+                <img id="blah" [src]="imageSrc " alt="No Image uploaded" class="upLoadImg"/>
+            </div>
+        <ng-container *ngIf="f['selectFile'].untouched && f['selectFile'].invalid">
+            <p class="text-danger" *ngIf="f['selectFile'].hasError('required')">
+                Maximum file size is 200KB 
+            </p>
+        </ng-container>
+    </div>
+    <div class="text-right">
+        <button mat-raised-button color="primary" type="submit" *ngIf="!canEdit"
+        [disabled]="isDisabled" 
+        >Add Todo</button>
+        <button mat-raised-button color="primary" type="button" *ngIf="canEdit" (click)="onUpdateTod()">Update</button>
+        <button mat-raised-button color="warn" type="button" class="mx-3" (click)="onCancelForm()">Cancel</button>
+    </div>
+</form>
+
+

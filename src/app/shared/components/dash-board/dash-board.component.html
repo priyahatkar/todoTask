@@ -1,0 +1,16 @@
+
+<section class="section">
+    <button mat-raised-button color="primary" (click)="onTodoFormOpen()">
+        Add Todo
+    </button>
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <app-todo-table [todoPost]="todoArray"
+            (emitEditTodo)="onEditTodoPost($event)" 
+            (emitDeleteTodo)="onDeleteTodoPost($event)"></app-todo-table>
+            <!-- <app-todo-form></app-todo-form> -->
+        </div>
+    </div>
+</div>
